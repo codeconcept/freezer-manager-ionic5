@@ -27,6 +27,7 @@ export class Tab1Page implements OnInit {
   add() {
     console.log(this.form);
     this.foodService.addFood(this.form.value);
+    this.form.reset();
   }
 
 }
