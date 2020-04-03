@@ -3,9 +3,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { DocumentChangeAction } from '@angular/fire/firestore';
+import { ModalController } from '@ionic/angular';
 
 import { FoodService } from './../services/food.service';
 import { Food } from './../interfaces/food.model';
+import { EditModal } from './edit-modal';
 
 @Component({
   selector: 'app-tab2',
@@ -17,7 +19,7 @@ export class Tab2Page implements OnInit, OnDestroy {
   sub: Subscription;
   isLoading = false;
 
-  constructor(private foodService: FoodService) {}
+  constructor(private foodService: FoodService, private modalCtrl: ModalController) {}
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter', this.allFoodInFreezer);
@@ -35,8 +37,13 @@ export class Tab2Page implements OnInit, OnDestroy {
     });
   }
 
-  edit(id) {
+  async edit(id) {
     console.log('id', id);
+    const modal = await this.modalCtrl.create({
+      component: EditModal,
+      componentProps: { 'foodId' : id }
+    });
+    return await modal.present();
   }
 
   delete(id) {

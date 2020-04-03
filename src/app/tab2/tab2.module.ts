@@ -6,16 +6,18 @@ import { FormsModule } from '@angular/forms';
 
 import { Tab2Page } from './tab2.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
+import { EditModal } from './edit-modal';
 
 @NgModule({
   imports: [
-    IonicModule,
+  IonicModule,
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: Tab2Page }])
   ],
-  declarations: [Tab2Page]
+  declarations: [Tab2Page, EditModal],
+  entryComponents: [EditModal]
 })
 export class Tab2PageModule {
 }
