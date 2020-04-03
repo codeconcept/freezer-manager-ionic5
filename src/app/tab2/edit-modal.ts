@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Food } from 'src/app/interfaces/food.model';
-import { FoodService } from 'src/app/services/food.service';
 import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+
+import { Food } from 'src/app/interfaces/food.model';
+import { FoodService } from 'src/app/services/food.service';
 
 
 @Component({
@@ -14,8 +16,9 @@ export class EditModal {
   @Input() foodId: string;
   foodItem: any;
   sub: Subscription;
-
-  constructor(private foodService: FoodService, private modalCtrl: ModalController) { }
+  form: FormGroup;
+  isLoading = false;
+  constructor(private foodService: FoodService, private modalCtrl: ModalController, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.sub = this.foodService.getFood(this.foodId).subscribe(data => {
@@ -23,7 +26,25 @@ export class EditModal {
           id: data.payload.id,
           ...data.payload.data()
         } as Food;
+
+         this.createForm();
       });
+  }
+
+  createForm() {
+    this.form = this.fb.group({
+      foodName: new FormControl(this.foodItem.foodName),
+      datePlacedInFreezer: new FormControl(this.foodItem.datePlacedInFreezer),
+    });
+  }
+
+  update() {
+    console.log(this.form.value);
+    this.isLoading = true;
+    const updatedFood = {...this.form.value, id: this.foodItem.id};
+    this.foodService.updateFood(updatedFood).subscribe(() => {
+      this.isLoading = false;
+    });
   }
 
   goBack() {
