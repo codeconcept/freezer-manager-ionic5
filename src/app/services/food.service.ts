@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { DocumentChangeAction } from '@angular/fire/firestore';
 
 import { Observable } from 'rxjs';
@@ -18,7 +18,7 @@ export class FoodService {
     return this.afs.collection('freezer').snapshotChanges();
   }
 
-  addFood(foodItem: Food) {
-    // TODO
+  addFood(foodItem: Food): Promise<DocumentReference> {
+    return this.afs.collection('freezer').add(foodItem);
   }
 }
