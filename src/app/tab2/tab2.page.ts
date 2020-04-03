@@ -9,7 +9,7 @@ import { Food } from './../interfaces/food.model';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page implements OnInit {
-
+  allFoodInFreezer = [];
   constructor(private foodService: FoodService) {}
 
   ionViewWillEnter() {
