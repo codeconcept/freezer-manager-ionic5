@@ -33,6 +33,14 @@ export class Tab2Page implements OnInit, OnDestroy {
     });
   }
 
+  edit(id) {
+    console.log('id', id);
+  }
+
+  delete(id) {
+    console.log('id', id);
+  }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
