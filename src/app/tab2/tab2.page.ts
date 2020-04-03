@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { Observable, Subscription } from 'rxjs';
+import { DocumentChangeAction } from '@angular/fire/firestore';
 
 import { FoodService } from './../services/food.service';
 import { Food } from './../interfaces/food.model';
@@ -8,18 +11,30 @@ import { Food } from './../interfaces/food.model';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page implements OnInit {
+export class Tab2Page implements OnInit, OnDestroy {
   allFoodInFreezer = [];
+  sub: Subscription;
+
   constructor(private foodService: FoodService) {}
 
   ionViewWillEnter() {
-    this.allFoodInFreezer = this.foodService.allFood;
     console.log('ionViewWillEnter', this.allFoodInFreezer);
   }
 
   ngOnInit() {
-    this.allFoodInFreezer = this.foodService.allFood;
     console.log('ngOnInit', this.allFoodInFreezer);
+    this.sub = this.foodService.allFood().subscribe(data => {
+      this.allFoodInFreezer = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data()
+        } as Food;
+      });
+    });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
 }

@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyBs4n2aZ3gwXAV73a0t6PIqOVcfiJRVYoQ',
+    authDomain: 'freezer-manager-86e94.firebaseapp.com',
+    databaseURL: 'https://freezer-manager-86e94.firebaseio.com',
+    projectId: 'freezer-manager-86e94',
+    storageBucket: 'freezer-manager-86e94.appspot.com',
+    messagingSenderId: '1054370646783'
+  }
 };
 
 /*

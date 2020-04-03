@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
+
+import { AngularFirestore } from '@angular/fire/firestore';
+import { DocumentChangeAction } from '@angular/fire/firestore';
+
+import { Observable } from 'rxjs';
+
 import { Food } from '../interfaces/food.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FoodService {
-  private _allFood: Food[] = [];
 
-  get allFood() {
-    return this._allFood;
+  constructor(private afs: AngularFirestore) { }
+
+  allFood(): Observable<DocumentChangeAction<{}>[]> {
+    return this.afs.collection('freezer').snapshotChanges();
   }
 
-  constructor() { }
-
   addFood(foodItem: Food) {
-    this._allFood = [foodItem, ...this._allFood];
-    console.log(this._allFood);
+    // TODO
   }
 }
