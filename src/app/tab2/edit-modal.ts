@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
@@ -19,7 +19,11 @@ export class EditModal {
   sub: Subscription;
   form: FormGroup;
   isLoading = false;
-  constructor(private foodService: FoodService, private modalCtrl: ModalController, private fb: FormBuilder) { }
+  constructor(
+      private foodService: FoodService, 
+      private modalCtrl: ModalController, 
+      private fb: FormBuilder, 
+      private toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.sub = this.foodService.getFood(this.foodId).subscribe(data => {
@@ -43,8 +47,29 @@ export class EditModal {
     console.log(this.form.value);
     this.isLoading = true;
     const updatedFood = {...this.form.value, id: this.foodItem.id};
-    this.foodService.updateFood(updatedFood).subscribe(() => {
+
+    this.foodService.updateFood(updatedFood).subscribe(async () => {
       this.isLoading = false;
+
+      const toast = await this.toastCtrl.create({
+        message: 'update is successful',
+        duration: 2000,
+        color: 'primary',
+        position: 'middle'
+      });
+      
+      toast.present();
+
+    }, async (err) => {
+        const toast = await this.toastCtrl.create({
+          message: 'update failed',
+          duration: 2000,
+          color: 'danger',
+          position: 'top'
+        });
+        
+        toast.present();
+
     });
   }
 

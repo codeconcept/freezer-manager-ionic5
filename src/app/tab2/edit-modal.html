@@ -36,8 +36,9 @@
             <ion-col>
               <ion-button
                 (click)="update()"
-                expand="full"
+                expand="block"
                 [disabled]="!this.form.valid"
+                fill="outline"
                 >update</ion-button
               >
             </ion-col>
@@ -51,5 +52,5 @@
       </form>
     </ion-card-content>
   </ion-card>
-  <ion-button (click)="goBack()">back</ion-button>
+  <ion-button (click)="goBack()" fill="outline">back</ion-button>
 </ion-content>
