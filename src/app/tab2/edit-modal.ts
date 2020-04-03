@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+
 
 import { Food } from 'src/app/interfaces/food.model';
 import { FoodService } from 'src/app/services/food.service';
@@ -33,8 +34,8 @@ export class EditModal {
 
   createForm() {
     this.form = this.fb.group({
-      foodName: new FormControl(this.foodItem.foodName),
-      datePlacedInFreezer: new FormControl(this.foodItem.datePlacedInFreezer),
+      foodName: new FormControl(this.foodItem.foodName, Validators.required),
+      datePlacedInFreezer: new FormControl(this.foodItem.datePlacedInFreezer, Validators.required),
     });
   }
 
