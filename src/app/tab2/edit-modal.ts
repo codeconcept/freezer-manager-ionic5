@@ -2,7 +2,8 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-
+import categories from '../shared/food-categories'
+import { Category } from './../interfaces/category.interface';
 
 import { Food } from 'src/app/interfaces/food.interface';
 import { FoodService } from 'src/app/services/food.service';
@@ -19,6 +20,8 @@ export class EditModal {
   sub: Subscription;
   form: FormGroup;
   isLoading = false;
+  allCategories: Category[];
+
   constructor(
       private foodService: FoodService, 
       private modalCtrl: ModalController, 
@@ -26,6 +29,8 @@ export class EditModal {
       private toastCtrl: ToastController) { }
 
   ngOnInit() {
+    this.allCategories = categories;
+
     this.sub = this.foodService.getFood(this.foodId).subscribe(data => {
       this.foodItem = {
           id: data.payload.id,
@@ -39,6 +44,7 @@ export class EditModal {
   createForm() {
     this.form = this.fb.group({
       foodName: new FormControl(this.foodItem.foodName, Validators.required),
+      category: new FormControl(this.foodItem.category, Validators.required),
       datePlacedInFreezer: new FormControl(this.foodItem.datePlacedInFreezer, Validators.required),
     });
   }

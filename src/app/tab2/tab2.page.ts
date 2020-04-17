@@ -9,6 +9,7 @@ import { FoodService } from './../services/food.service';
 import { Food } from './../interfaces/food.interface';
 import { EditModal } from './edit-modal';
 
+
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -47,21 +48,6 @@ export class Tab2Page implements OnInit, OnDestroy {
   }
 
   async delete(id) {
-    /*
-    console.log('id', id);
-    this.isLoading = true;
-    this.foodService
-      .deleteFood(id)
-      .pipe(
-        take(1)
-      )
-      .subscribe(() => {
-        this.isLoading = false;
-      }, err => {
-        console.error(err);
-      });
-      */
-
       const alert = await this.alertCtrl.create({
       header: 'Delete this food?',
       subHeader: 'deletion is irreversible',
