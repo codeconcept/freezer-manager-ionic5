@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { DocumentChangeAction } from '@angular/fire/firestore';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 
 import { FoodService } from './../services/food.service';
 import { Food } from './../interfaces/food.model';
@@ -19,7 +19,7 @@ export class Tab2Page implements OnInit, OnDestroy {
   sub: Subscription;
   isLoading = false;
 
-  constructor(private foodService: FoodService, private modalCtrl: ModalController) {}
+  constructor(private foodService: FoodService, private modalCtrl: ModalController, private alertCtrl: AlertController) {}
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter', this.allFoodInFreezer);
@@ -46,7 +46,8 @@ export class Tab2Page implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  delete(id) {
+  async delete(id) {
+    /*
     console.log('id', id);
     this.isLoading = true;
     this.foodService
@@ -59,6 +60,40 @@ export class Tab2Page implements OnInit, OnDestroy {
       }, err => {
         console.error(err);
       });
+      */
+
+      const alert = await this.alertCtrl.create({
+      header: 'Delete this food?',
+      subHeader: 'deletion is irreversible',
+      buttons: [
+        {
+          text: 'Cancel',
+          cssClass: 'primary',
+          role: 'cancel',
+          handler: () => {
+            this.isLoading = false;
+          }
+        },
+        {
+          text: 'delete',
+          cssClass: 'danger',
+          handler: () => {
+            this.foodService
+              .deleteFood(id)
+              .pipe(
+                take(1)
+              )
+              .subscribe(() => {
+                this.isLoading = false;
+              }, err => {
+                console.error(err);
+              });
+          }
+        }
+      ]
+    })
+    
+    await alert.present(); 
   }
 
   ngOnDestroy() {
