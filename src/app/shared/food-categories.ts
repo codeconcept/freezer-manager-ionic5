@@ -1,4 +1,4 @@
-import { Category } from './category.interface';
+import { Category } from '../interfaces/category.interface';
 
 const foodCategories: Category[] = [
   {

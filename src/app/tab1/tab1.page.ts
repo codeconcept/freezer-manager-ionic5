@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { FoodService } from './../services/food.service';
 import categories from '../shared/food-categories';
@@ -24,7 +24,7 @@ export class Tab1Page implements OnInit {
         validators: [Validators.required]
       }),
       category: new FormControl({
-        validators: [Validators.required]
+        validators: [Validators.required]        
       }),
       datePlacedInFreezer: new FormControl(null, {
         validators: [Validators.required]

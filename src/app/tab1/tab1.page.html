@@ -53,7 +53,7 @@
               <ion-button
                 (click)="add()"
                 expand="full"
-                [disabled]="!this.form.valid"
+                [disabled]="!this.form.valid || this.form.get('category').pristine"
                 >add</ion-button
               >
             </ion-col>
