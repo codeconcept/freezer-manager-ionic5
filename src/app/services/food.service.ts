@@ -15,7 +15,8 @@ export class FoodService {
   constructor(private afs: AngularFirestore) { }
 
   allFood(): Observable<DocumentChangeAction<{}>[]> {
-    return this.afs.collection('freezer').snapshotChanges();
+    const freezerCollectionRef = this.afs.collection<Food>('freezer', ref => ref.orderBy('foodName', 'asc'));
+    return freezerCollectionRef.snapshotChanges();
   }
 
   getFood(id: string): Observable<Action<DocumentSnapshot<{}>>> {
