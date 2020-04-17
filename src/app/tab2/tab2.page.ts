@@ -6,7 +6,7 @@ import { DocumentChangeAction } from '@angular/fire/firestore';
 import { ModalController, AlertController } from '@ionic/angular';
 
 import { FoodService } from './../services/food.service';
-import { Food } from './../interfaces/food.model';
+import { Food } from './../interfaces/food.interface';
 import { EditModal } from './edit-modal';
 
 @Component({

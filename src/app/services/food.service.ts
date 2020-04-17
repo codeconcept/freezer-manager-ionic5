@@ -5,7 +5,7 @@ import { DocumentChangeAction } from '@angular/fire/firestore';
 
 import { Observable, from } from 'rxjs';
 
-import { Food } from '../interfaces/food.model';
+import { Food } from '../interfaces/food.interface';
 
 @Injectable({
   providedIn: 'root'

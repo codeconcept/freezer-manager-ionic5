@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 
-import { Food } from 'src/app/interfaces/food.model';
+import { Food } from 'src/app/interfaces/food.interface';
 import { FoodService } from 'src/app/services/food.service';
 
 
