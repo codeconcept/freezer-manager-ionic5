@@ -34,7 +34,9 @@ export class EditModal {
     this.sub = this.foodService.getFood(this.foodId).subscribe(data => {
       this.foodItem = {
           id: data.payload.id,
-          ...data.payload.data()
+          foodName: data.payload.data().foodName,
+          category: data.payload.data().category,
+          datePlacedInFreezer: data.payload.data().datePlacedInFreezer,
         } as Food;
 
          this.createForm();
