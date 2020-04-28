@@ -23,6 +23,20 @@ export class FoodService {
     return this.afs.collection('freezer').doc(id).snapshotChanges();
   }
 
+  computeMaxDateToKeepFood(category, datePlacedInFreeze) {
+    const securityMArginInDays = 7;
+    // convert maxStayInFreezerInMonth from months to days: maxStayInFreezerInMonth => maxStayInFreezerInDays
+    const maxStayInFreezerInDays = category.maxStayInFreezerInMonth * 30;
+    // compute security margin
+    const maxStayInFreezerInDaysWithMargin = maxStayInFreezerInDays - securityMArginInDays;
+    // compute finale date and return
+    const currentDate = new Date(datePlacedInFreeze);
+    const finaleDate = currentDate.setDate(currentDate.getDate() + maxStayInFreezerInDaysWithMargin);
+    console.log('finaleDate', finaleDate);    
+    // to go from epoch to Date Object
+    return new Date(finaleDate)
+  }
+
   addFood(foodItem: Food): Promise<DocumentReference> {
     return this.afs.collection('freezer').add(foodItem);
   }

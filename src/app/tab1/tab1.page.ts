@@ -34,7 +34,17 @@ export class Tab1Page implements OnInit {
 
   add() {
     this.isLoading = true;
-    const foodItem = { foodName: this.form.value.foodName, category:this.form.value.category, datePlacedInFreezer: new Date(this.form.value.datePlacedInFreezer) };
+
+    const category = this.allCategories.find(c => c.id === this.form.value.category);
+    const maxDateInFreezer = this.foodService.computeMaxDateToKeepFood(category, this.form.value.datePlacedInFreezer);
+    
+    const foodItem = { 
+      foodName: this.form.value.foodName, 
+      category:this.form.value.category, 
+      datePlacedInFreezer: new Date(this.form.value.datePlacedInFreezer), 
+      betterToEatBefore: maxDateInFreezer 
+    };
+    
     this.foodService.addFood(foodItem).then(data => {
       this.isLoading = false;
       console.log(data);
